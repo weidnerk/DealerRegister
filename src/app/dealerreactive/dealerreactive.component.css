@@ -1,0 +1,13 @@
+.DMSWidth {
+    width: 45%;
+}
+
+.zipcode {
+    width: 100px !important;
+}
+.city {
+    width: 200px !important;
+}
+.county {
+    width: 200px !important;
+}

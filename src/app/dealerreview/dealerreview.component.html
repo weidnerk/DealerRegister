@@ -1,0 +1,126 @@
+<div class="container">
+    <mat-card>
+        <mat-card-title>Please carefully review the information before proceeding</mat-card-title>
+        <mat-card-content>
+            <form class="formwidth" (ngSubmit)="return()" novalidate>
+                <table class="fullwidth" cellspacing="0">
+                    <tr>
+                        <td>
+                            Company name:
+                        </td>
+                        <td>{{ paramDealer.CompanyName }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact:
+                        </td>
+                        <td>{{ firstName }} {{ lastName }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email:
+                        </td>
+                        <td>{{ paramDealer.Contacts[0].Email }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Address:
+                        </td>
+                        <td>{{ paramDealer.AddrLn1 }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Address 2:
+                        </td>
+                        <td>{{ paramDealer.AddrLn2 }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            City:
+                        </td>
+                        <td>{{ paramDealer.City }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            State:
+                        </td>
+                        <td>{{ paramDealer.State }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Zip:
+                        </td>
+                        <td>{{ paramDealer.Zip }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Phone:
+                        </td>
+                        <td>{{ paramDealer.Phone }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Submitting from DealerTrack:
+                        </td>
+                        <td>{{ paramDealer.SubmitFromDT }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DMS:
+                        </td>
+                        <td>{{ paramDealer.DMSName }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DMS Other:
+                        </td>
+                        <td>{{ paramDealer.DMSOther }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Referred By:
+                        </td>
+                        <td>{{ referredByName }}
+
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <p><strong>
+                    To make an update, click the Edit button below.  <br>
+                    When all information is complete, please click the Continue button below.<br>
+                    Thank you</strong>
+                    </p>
+                    <br/>
+                <p>
+                    <button color="primary" type="button" (click)="return()" mat-raised-button>Edit</button>
+                    <button color="primary" type="button" (click)="welcome()" mat-raised-button>Continue</button>
+                </p>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

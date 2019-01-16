@@ -1,0 +1,175 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>MAF FLEX Dealer Registration</mat-card-title>
+    <mat-card-content *ngIf="dealerForm">
+      <form [formGroup]="dealerForm" (ngSubmit)="onSubmit(dealerForm.value)">
+
+        <mat-form-field>
+          <input matInput formControlName="name" placeholder="Dealer name" maxlength="40">
+        </mat-form-field>
+        <div class="errors" *ngIf="name.invalid && name.touched">
+          Please enter a valid name
+        </div>
+        <br />
+
+        <div style="float:left;margin:0 10px 10px 0;">
+          <mat-form-field>
+            <input matInput formControlName="firstName" placeholder="First name" maxlength="15">
+          </mat-form-field>
+          <div class="errors" *ngIf="firstName.invalid && firstName.touched">
+            Enter a valid first name
+          </div>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="lastName" placeholder="Last Name" maxlength="15">
+          </mat-form-field>
+          <div class="errors" *ngIf="lastName.invalid && lastName.touched">
+            Enter a valid last name
+          </div>
+        </div>
+        <div style="clear:both;"></div>
+
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+          <mat-error *ngIf="email.hasError('emailTaken')">
+            Email address is taken in FLEX
+          </mat-error>
+          <mat-error *ngIf="email.hasError('required')">
+            Email is
+            <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field>
+          <input matInput formControlName="address" placeholder="Address Line 1" maxlength="40">
+        </mat-form-field>
+        <div class="errors" *ngIf="address.invalid && address.touched">
+          Address is required
+        </div>
+        <br />
+
+        <mat-form-field>
+          <input matInput formControlName="address2" placeholder="Address Line 2" maxlength="40">
+        </mat-form-field>
+        <br />
+
+        <div>
+          <div style="float:left;">
+            <mat-form-field class="city">
+              <input matInput formControlName="city" placeholder="City" maxlength="30">
+            </mat-form-field>
+            <div class="errors" *ngIf="city.invalid && city.touched">
+              City is required
+            </div>
+          </div>
+          <div>
+            <br /> State
+            <select [formControl]="state">
+              <option *ngFor="let state of states" value={{state.value}}>
+                {{state.viewValue}}
+              </option>
+            </select>
+            <!-- had problems where drop down would lock and could not get rid of it
+          (do i have it setup wrong?) 
+          2nd problem is required validator not working
+       
+         <mat-form-field>
+            <mat-select placeholder="Favorite state">
+              <mat-option *ngFor="let state of states" [value]="state.value">
+                {{ state.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          </div>
+        </div>
+        <div style="clear:both;"></div>
+
+        <div style="width:100%;">
+          <div style="float:left;">
+            <mat-form-field class="zipCode">
+              <input matInput formControlName="zip" placeholder="Zip" maxlength="5">
+              <div class="errors" *ngIf="zip.touched && zip.invalid">
+                Please enter a valid zip code
+              </div>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="county">
+              <mat-select formControlName="county" placeholder="County">
+                <mat-option *ngFor="let county of counties" [value]="county">
+                  {{ county }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="clear:both;"></div>
+        <mat-form-field>
+          <input matInput formControlName="phone" placeholder="Business Phone" maxlength="10" type="text">
+          <div class="errors" *ngIf="phone.invalid && phone.touched">
+            Please enter a valid phone number
+          </div>
+        </mat-form-field>
+        <br />
+
+        <mat-checkbox formControlName="submitFromDT" color="primary"></mat-checkbox> Will you be submitting through
+        DealerTrack?
+        <br /><br />
+
+        <mat-form-field class="DMSWidth">
+          <mat-select formControlName="DMSId" placeholder="Your Dealership Management System">
+            <mat-option *ngFor="let d of DMSValues" [value]="d.value">
+              {{ d.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <mat-form-field class="DMSWidth">
+          <input matInput formControlName="DMSOther" placeholder="Other Dealership Management System" maxlength="40">
+        </mat-form-field>
+        <br />
+        <mat-form-field class="DMSWidth">
+          <mat-select formControlName="referredById" placeholder="Referred by">
+            <mat-option *ngFor="let d of ReferredByValues" [value]="d.value">
+              {{ d.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <input type="number" matInput formControlName="stateSalesTax" placeholder="Sales Tax Percent">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input type="number" matInput formControlName="countyTax" placeholder="County Tax Percent" maxlength="5">
+          </mat-form-field>
+        </div>
+        <p>
+          <button id="bnSubmit" color="accent" type="submit" color="primary" mat-raised-button [disabled]="!dealerForm.valid">Submit</button>
+        </p>
+
+      </form>
+      <br />
+      <span style="color:red">{{ errorMessage }}</span>
+      <!--
+         <p>Form: {{ dealerForm.value | json }}</p>
+      <p>Form status: {{ dealerForm.status }}</p>
+      <p>CMS ID: {{ dealer.CompanyId }}</p>
+      <p>name errors: {{ name.errors | json }} (null means no errors)</p>
+    -->
+      <!-- <p>city errors: {{ city.errors | json }}</p>-->
+      <!-- <p>zip errors: {{ zip.errors | json }}</p>   -->
+      <!-- <p>submitFromDT: {{ submitFromDT.value }}</p>  -->
+
+      <!-- <p>state errors: {{ state.errors | json }}</p>
+      <p>state value: {{ state.viewValue }}</p> -->
+
+    </mat-card-content>
+  </mat-card>
+</div>
