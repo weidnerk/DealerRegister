@@ -1,10 +1,11 @@
 <div class="container">
   <mat-card>
-    <mat-card-title>MAF FLEX Dealer Registration</mat-card-title>
+    <mat-card-title>MAF FLEX Dealer Registration</mat-card-title><br>
     <mat-card-content *ngIf="dealerForm">
       <form [formGroup]="dealerForm" (ngSubmit)="onSubmit(dealerForm.value)">
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="dealer outlinepadding">
+          <mat-label>Dealer name</mat-label>
           <input matInput formControlName="name" placeholder="Dealer name" maxlength="40">
         </mat-form-field>
         <div class="errors" *ngIf="name.invalid && name.touched">
@@ -13,7 +14,8 @@
         <br />
 
         <div style="float:left;margin:0 10px 10px 0;">
-          <mat-form-field>
+          <mat-form-field appearance="outline" class="firstname outlinepadding">
+            <mat-label>First name</mat-label>
             <input matInput formControlName="firstName" placeholder="First name" maxlength="15">
           </mat-form-field>
           <div class="errors" *ngIf="firstName.invalid && firstName.touched">
@@ -21,7 +23,8 @@
           </div>
         </div>
         <div>
-          <mat-form-field>
+          <mat-form-field appearance="outline" class="lastname outlinepadding">
+            <mat-label>Last name</mat-label>
             <input matInput formControlName="lastName" placeholder="Last Name" maxlength="15">
           </mat-form-field>
           <div class="errors" *ngIf="lastName.invalid && lastName.touched">
@@ -30,8 +33,9 @@
         </div>
         <div style="clear:both;"></div>
 
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
+        <mat-form-field appearance="outline" class="dealer outlinepadding">
+            <mat-label>Email address</mat-label>
+          <input matInput placeholder="Email address" formControlName="email" maxlength="40">
           <mat-error *ngIf="email.hasError('emailTaken')">
             Email address is taken in FLEX
           </mat-error>
@@ -45,7 +49,8 @@
         </mat-form-field>
         <br />
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="dealer outlinepadding">
+          <mat-label>Address</mat-label>
           <input matInput formControlName="address" placeholder="Address Line 1" maxlength="40">
         </mat-form-field>
         <div class="errors" *ngIf="address.invalid && address.touched">
@@ -53,15 +58,17 @@
         </div>
         <br />
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="dealer outlinepadding">
+          <mat-label>Address 2</mat-label>
           <input matInput formControlName="address2" placeholder="Address Line 2" maxlength="40">
         </mat-form-field>
         <br />
 
         <div>
           <div style="float:left;">
-            <mat-form-field class="city">
-              <input matInput formControlName="city" placeholder="City" maxlength="30">
+            <mat-form-field class="city" appearance="outline" class="city outlinepadding">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" placeholder="City" maxlength="30">
             </mat-form-field>
             <div class="errors" *ngIf="city.invalid && city.touched">
               City is required
@@ -91,7 +98,8 @@
 
         <div style="width:100%;">
           <div style="float:left;">
-            <mat-form-field class="zipCode">
+            <mat-form-field class="zipCode" appearance="outline" class="zipcode outlinepadding">
+              <mat-label>Zip code</mat-label>
               <input matInput formControlName="zip" placeholder="Zip" maxlength="5">
               <div class="errors" *ngIf="zip.touched && zip.invalid">
                 Please enter a valid zip code
@@ -109,7 +117,8 @@
           </div>
         </div>
         <div style="clear:both;"></div>
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="businessphone outlinepadding">
+            <mat-label>Business phone</mat-label>
           <input matInput formControlName="phone" placeholder="Business Phone" maxlength="10" type="text">
           <div class="errors" *ngIf="phone.invalid && phone.touched">
             Please enter a valid phone number
@@ -129,8 +138,9 @@
           </mat-select>
         </mat-form-field>
         <br />
-        <mat-form-field class="DMSWidth">
-          <input matInput formControlName="DMSOther" placeholder="Other Dealership Management System" maxlength="40">
+        <mat-form-field class="DMSWidth" appearance="outline" class="dealer outlinepadding">
+            <mat-label>Other Dealership Management System</mat-label>
+            <input matInput formControlName="DMSOther" placeholder="Other Dealership Management System" maxlength="40">
         </mat-form-field>
         <br />
         <mat-form-field class="DMSWidth">
@@ -141,17 +151,18 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <mat-form-field>
-            <input type="number" matInput formControlName="stateSalesTax" placeholder="Sales Tax Percent">
+          <mat-form-field appearance="outline" class="taxpercent outlinepadding">
+              <mat-label>Sales tax %</mat-label>
+              <input type="number" matInput formControlName="stateSalesTax" placeholder="Sales Tax Percent">
           </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input type="number" matInput formControlName="countyTax" placeholder="County Tax Percent" maxlength="5">
+          <mat-form-field appearance="outline" class="taxpercent outlinepadding">
+              <mat-label>County tax %</mat-label>
+              <input type="number" matInput formControlName="countyTax" placeholder="County Tax Percent" maxlength="5">
           </mat-form-field>
         </div>
         <p>
-          <button id="bnSubmit" color="accent" type="submit" color="primary" mat-raised-button [disabled]="!dealerForm.valid">Submit</button>
+          <button id="bnSubmit" color="accent" type="submit" color="primary" mat-raised-button
+            [disabled]="!dealerForm.valid">Submit</button>
         </p>
 
       </form>

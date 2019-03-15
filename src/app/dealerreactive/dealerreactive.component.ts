@@ -28,7 +28,7 @@ const DEALER_REGEX = /^[0-9a-zA-Z. ]+$/;
 @Component({
   selector: 'app-dealerreactive',
   templateUrl: './dealerreactive.component.html',
-  styleUrls: ['./dealerreactive.component.css']
+  styleUrls: ['./dealerreactive.component.scss']
 })
 export class DealerReactiveComponent implements OnInit {
 
@@ -213,23 +213,37 @@ export class DealerReactiveComponent implements OnInit {
   buildForm(): void {
 
     this.dealerForm = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(2), Validators.pattern(DEALER_REGEX)]],
-      firstName: [null, [Validators.required, Validators.minLength(2), Validators.pattern(FIRSTNAME_REGEX)]],
-      lastName: [null, [Validators.required, Validators.minLength(2), Validators.pattern(LASTNAME_REGEX)]],
-      email: [null, [Validators.required, Validators.email], this.validateEmailNotTaken.bind(this)],
+      name: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(DEALER_REGEX)],
+                  udpateOn: 'submit'}],
+      firstName: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(FIRSTNAME_REGEX)],
+                  udpateOn: 'submit'}],
+      lastName: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(LASTNAME_REGEX)],
+        udpateOn: 'submit'}],
+        email: [null, {validators: [Validators.required, Validators.email], 
+                    asyncValidators: [this.validateEmailNotTaken.bind(this)],
+                    udpateOn: 'submit'}],
       address: [null, Validators.required],
       address2: [null],
       city: [null, Validators.required],
       state: [null, Validators.required],
-      zip: [null, this.validateZip.bind(this), this.validateCounty.bind(this)],
-      phone: [null, this.validatePhone.bind(this)],
-      submitFromDT: [false],
-      DMSId: [null],
-      DMSOther: [null],
-      referredById: [null],
-      county: [null, Validators.required],
-      stateSalesTax: [null, [Validators.max(10), Validators.min(0)]],
-      countyTax: [null, [Validators.max(10), Validators.min(0)]]
+      zip: [null, {validators: [this.validateZip.bind(this)], 
+                  asyncValidators: [this.validateCounty.bind(this)],
+                  udpateOn: 'submit'}],
+      phone: [null, {validators: [this.validatePhone.bind(this)]}],
+      submitFromDT: [false,
+        {udpateOn: 'submit'}],
+      DMSId: [null,
+        {udpateOn: 'submit'}],
+      DMSOther: [null,
+        {udpateOn: 'submit'}],
+      referredById: [null, 
+        {udpateOn: 'submit'}],
+      county: [null, {validators: [Validators.required],
+        udpateOn: 'submit'}],
+      stateSalesTax: [null, {validators: [Validators.max(10), Validators.min(0)],
+        udpateOn: 'submit'}],
+      countyTax: [null, {validators: [Validators.max(10), Validators.min(0)],
+        udpateOn: 'submit'}]
     })
   }
 

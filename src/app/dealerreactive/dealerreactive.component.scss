@@ -1,0 +1,52 @@
+.DMSWidth {
+    width: 45%;
+}
+
+.zipcode {
+    width: 100px !important;
+}
+.city {
+    width: 200px !important;
+}
+.county {
+    width: 200px !important;
+}
+.state {
+    width: 100px;
+}
+.dealer {
+    width: 300px;
+}
+.firstname {
+    width: 150px;
+}
+.lastname {
+    width: 150px;
+}
+.businessphone {
+    width: 150px;
+}
+.taxpercent {
+    width: 120px;
+}
+
+.outlinepadding ::ng-deep .mat-form-field-appearance-outline {
+    // width: 65px;
+    height: 45px;
+    line-height: 1.725;
+}
+
+.outlinepadding ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+padding: 0px 10px 0px 10px;
+}
+
+.outlinepadding ::ng-deep .mat-form-field-infix {
+padding: 3px 0 3px 0;
+}
+
+.outlinepadding ::ng-deep .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+/* text-align: center; */
+top: -25px;
+}
+
+  
