@@ -176,7 +176,7 @@ export class DealerReactiveComponent implements OnInit {
 
         // if qrystr, click refresh, this.dealer has values?
         this.dealerForm.patchValue({
-          name: this.dealer.CompanyName,
+          dealername: this.dealer.CompanyName,
           firstName: this.getFirstName(this.dealer.Contacts[0].ContactName),// have to split contact name into first and last name
           lastName: this.getLastName(this.dealer.Contacts[0].ContactName),
           email: this.dealer.Contacts[0].Email,
@@ -191,8 +191,8 @@ export class DealerReactiveComponent implements OnInit {
           DMSOther: this.dealer.DMSOther,
           referredById: (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.ReferredBy != null) ? this.dealer.CompanyProfile.ReferredBy.toString() : null,
           county: this.dealer.County,
-          stateSalesTax: (this.dealer.DlrSaleTaxPer) ? Number(this.dealer.DlrSaleTaxPer) :null,
-          countyTax: (this.dealer.DlrCntyTaxPer) ? Number(this.dealer.DlrCntyTaxPer) :null,
+          stateSalesTax: (this.dealer.DlrSaleTaxPer) ? Number(this.dealer.DlrSaleTaxPer) : null,
+          countyTax: (this.dealer.DlrCntyTaxPer) ? Number(this.dealer.DlrCntyTaxPer) : null,
         });
         //this.dealerForm.controls['DMSId'].setValue('3');
         //this.dealerForm.controls['county'].setValue(this.dealer.County);
@@ -213,37 +213,64 @@ export class DealerReactiveComponent implements OnInit {
   buildForm(): void {
 
     this.dealerForm = this.fb.group({
-      name: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(DEALER_REGEX)],
-                  udpateOn: 'submit'}],
-      firstName: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(FIRSTNAME_REGEX)],
-                  udpateOn: 'submit'}],
-      lastName: [null, {validators: [Validators.required, Validators.minLength(2), Validators.pattern(LASTNAME_REGEX)],
-        udpateOn: 'submit'}],
-        email: [null, {validators: [Validators.required, Validators.email], 
-                    asyncValidators: [this.validateEmailNotTaken.bind(this)],
-                    udpateOn: 'submit'}],
-      address: [null, Validators.required],
+      dealername: [null, {
+        validators: [Validators.required, Validators.minLength(2), Validators.pattern(DEALER_REGEX)],
+        updateOn: 'submit'
+      }],
+      firstName: [null, {
+        validators: [Validators.required, Validators.minLength(2), Validators.pattern(FIRSTNAME_REGEX)],
+        updateOn: 'submit'
+      }],
+      lastName: [null, {
+        validators: [Validators.required, Validators.minLength(2), Validators.pattern(LASTNAME_REGEX)],
+        updateOn: 'submit'
+      }],
+      email: [null, {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.validateEmailNotTaken.bind(this)],
+        updateOn: 'submit'
+      }],
+      address: [null, {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'submit'
+      }],
       address2: [null],
-      city: [null, Validators.required],
-      state: [null, Validators.required],
-      zip: [null, {validators: [this.validateZip.bind(this)], 
-                  asyncValidators: [this.validateCounty.bind(this)],
-                  udpateOn: 'submit'}],
-      phone: [null, {validators: [this.validatePhone.bind(this)]}],
+      city: [null, {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'submit'
+      }],
+      state: [null, {
+        validators: [Validators.required],
+        updateOn: 'submit'
+      }],
+      zip: [null, {
+        validators: [this.validateZip.bind(this)],
+        asyncValidators: [this.validateCounty.bind(this)]
+      }],
+      phone: [null, {
+        validators: [this.validatePhone.bind(this)],
+        updateOn: 'submit'
+      }],
       submitFromDT: [false,
-        {udpateOn: 'submit'}],
+        { updateOn: 'submit' }],
       DMSId: [null,
-        {udpateOn: 'submit'}],
+        { updateOn: 'submit' }],
       DMSOther: [null,
-        {udpateOn: 'submit'}],
-      referredById: [null, 
-        {udpateOn: 'submit'}],
-      county: [null, {validators: [Validators.required],
-        udpateOn: 'submit'}],
-      stateSalesTax: [null, {validators: [Validators.max(10), Validators.min(0)],
-        udpateOn: 'submit'}],
-      countyTax: [null, {validators: [Validators.max(10), Validators.min(0)],
-        udpateOn: 'submit'}]
+        { updateOn: 'submit' }],
+      referredById: [null,
+        { updateOn: 'submit' }],
+      county: [null, {
+        validators: [Validators.required],
+        updateOn: 'submit'
+      }],
+      stateSalesTax: [null, {
+        validators: [Validators.max(10), Validators.min(0)],
+        updateOn: 'submit'
+      }],
+      countyTax: [null, {
+        validators: [Validators.max(10), Validators.min(0)],
+        updateOn: 'submit'
+      }]
     })
   }
 
@@ -277,7 +304,10 @@ export class DealerReactiveComponent implements OnInit {
 
   // zip must be 5 digits long
   validateZip(c: AbstractControl): { [key: string]: boolean | null } {
-
+    //console.log('zip ' + c.value);
+    if (c.value === null) {
+      return { error: true };
+    }
     if (c.value != undefined) {
       this.dealerForm.controls['county'].setValue(null);
       let strLength: number = (<string>c.value).length;
@@ -315,12 +345,13 @@ export class DealerReactiveComponent implements OnInit {
     return { error: true };
   }
 
-  get name() { return this.dealerForm.get('name'); }
+  get dealername() { return this.dealerForm.get('dealername'); }
   get firstName() { return this.dealerForm.get('firstName'); }
   get lastName() { return this.dealerForm.get('lastName'); }
   get address() { return this.dealerForm.get('address'); }
   get address2() { return this.dealerForm.get('address2'); }
   get city() { return this.dealerForm.get('city'); }
+  get county() { return this.dealerForm.get('county'); }
   get state() { return this.dealerForm.get('state'); }
   get email() { return this.dealerForm.get('email'); }
   get phone() { return this.dealerForm.get('phone'); }
@@ -328,6 +359,9 @@ export class DealerReactiveComponent implements OnInit {
   get submitFromDT() { return this.dealerForm.get('submitFromDT'); }
   get DMSId() { return this.dealerForm.get('DMSId'); }
   get DMSOther() { return this.dealerForm.get('DMSOther'); }
+  get referredById() { return this.dealerForm.get('referredById'); }
+  get stateSalesTax() { return this.dealerForm.get('stateSalesTax'); }
+  get countyTax() { return this.dealerForm.get('countyTax'); }
 
   replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
@@ -360,58 +394,63 @@ export class DealerReactiveComponent implements OnInit {
     return name;
   }
 
-  // Note: parameter here is NOT a Company object - it's a FormGroup
-  onSubmit(dlrForm) {
+  onSubmit() {
+
+    console.log(this.dealerForm.valid);
+    if (!this.formIsValid())
+      return;
 
     // --------------------------------------------------
     // Fill 'dealer' from form
     // --------------------------------------------------
     this.dealer.CreatedDate = new Date();
-    this.dealer.CompanyName = dlrForm.name.trim();
-    this.dealer.AddrLn1 = dlrForm.address.trim();
-    this.dealer.AddrLn2 = (dlrForm.address2) ? dlrForm.address2.trim() : null;
-    this.dealer.City = dlrForm.city.trim();
-    this.dealer.State = dlrForm.state;
-    this.dealer.Zip = dlrForm.zip;
-    this.dealer.County = dlrForm.county;
-    this.dealer.Phone = dlrForm.phone;
-    this.dealer.SubmitFromDT = dlrForm.submitFromDT;
+    this.dealer.CompanyName = this.dealername.value.trim();
+    this.dealer.AddrLn1 = this.address.value.trim();
+    this.dealer.AddrLn2 = (this.address2.value) ? this.address2.value.trim() : null;
+    this.dealer.City = this.city.value.trim();
+    this.dealer.State = this.state.value;
+    this.dealer.Zip = this.zip.value;
+    this.dealer.County = this.county.value;
+    this.dealer.Phone = this.phone.value;
+    this.dealer.SubmitFromDT = this.submitFromDT.value;
 
     // Did user select a DMS?
-    if (dlrForm.DMSId != null) {
-      if (this.dealer.CompanyProfile == null) {
+    if (this.DMSId.value != null) {
+      if (this.dealer.CompanyProfile == null)   // the CMS dealer may not have a stored company profile yet
+      {
         let p = new CompanyProfile();
         p.CompanyID = this.dealer.CompanyID;
-        p.DMSId = Number(dlrForm.DMSId);
+        p.DMSId = Number(this.DMSId.value);
         this.dealer.CompanyProfile = p;
       }
       else {
-        this.dealer.CompanyProfile.DMSId = Number(dlrForm.DMSId);
+        this.dealer.CompanyProfile.DMSId = Number(this.DMSId.value);
       }
       this.dealer.DMSName = this.getDMSNameFromID(this.dealer.CompanyProfile.DMSId);
     }
-    this.dealer.DMSOther = dlrForm.DMSOther;
+    this.dealer.DMSOther = this.DMSOther.value;
 
     // Did user select a "Referred By" value?
-    if (dlrForm.referredById != null) {
-      if (this.dealer.CompanyProfile == null) {
+    if (this.referredById.value != null) {
+      if (this.dealer.CompanyProfile == null) 
+      {
         let p = new CompanyProfile();
         p.CompanyID = this.dealer.CompanyID;
-        p.ReferredBy = Number(dlrForm.referredById);
+        p.ReferredBy = Number(this.referredById.value);
         this.dealer.CompanyProfile = p;
       }
       else {
-        this.dealer.CompanyProfile.ReferredBy = Number(dlrForm.referredById);
+        this.dealer.CompanyProfile.ReferredBy = Number(this.referredById.value);
       }
     }
 
-    if (dlrForm.stateSalesTax)
-      this.dealer.DlrSaleTaxPer = Number(dlrForm.stateSalesTax);
+    if (this.stateSalesTax.value)
+      this.dealer.DlrSaleTaxPer = Number(this.stateSalesTax.value);
     else
       this.dealer.DlrSaleTaxPer = null;
 
-    if (dlrForm.countyTax)
-      this.dealer.DlrCntyTaxPer = Number(dlrForm.countyTax);
+    if (this.countyTax.value)
+      this.dealer.DlrCntyTaxPer = Number(this.countyTax.value);
     else
       this.dealer.DlrCntyTaxPer = null;
 
@@ -420,14 +459,14 @@ export class DealerReactiveComponent implements OnInit {
       this.dealer.Contacts = [{
         ContactID: this.dealer.Contacts[0].ContactID,
         CompanyID: this.dealer.Contacts[0].CompanyID,
-        Email: dlrForm.email,
-        ContactName: dlrForm.firstName.trim() + ' ' + dlrForm.lastName.trim()
+        Email: this.email.value,
+        ContactName: this.firstName.value.trim() + ' ' + this.lastName.value.trim()
       }];
     }
     else {
       this.contact = new Contact();
-      this.contact.ContactName = dlrForm.firstName.trim() + ' ' + dlrForm.lastName.trim();
-      this.contact.Email = dlrForm.email;
+      this.contact.ContactName = this.firstName.value.trim() + ' ' + this.lastName.value.trim();
+      this.contact.Email = this.email.value;
       this.dealer.Contacts = [];
       this.dealer.Contacts.push(this.contact);
     }
@@ -455,4 +494,30 @@ export class DealerReactiveComponent implements OnInit {
       () => console.log("Job Done Post !")                  //run this code in all cases
     );
   }
+
+    // Create our own 'form is valid' function so we can check when Submit button is clicked
+    formIsValid(): boolean {
+
+      // apparently these calls are not needed
+      //this.firstName.updateValueAndValidity();
+      //this.lastName.updateValueAndValidity();
+  
+      if (this.dealername.invalid) return false;
+      if (this.firstName.invalid ) return false;
+      if (this.lastName.invalid) return false;
+      if (this.email.invalid) return false;
+      if (this.address.invalid) return false;
+      if (this.address2.invalid) return false;
+      if (this.city.invalid) return false;
+      if (this.state.invalid) return false;
+      if (this.zip.invalid) return false;
+      if (this.county.invalid) return false;
+      if (this.phone.invalid) return false;
+      if (this.submitFromDT.invalid) return false;
+      if (this.DMSId.invalid) return false;
+      if (this.stateSalesTax.invalid) return false;
+      if (this.countyTax.invalid) return false;
+      return true;
+    }
+  
 }

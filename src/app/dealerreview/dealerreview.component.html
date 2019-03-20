@@ -108,6 +108,22 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            Sales Tax:
+                        </td>
+                        <td>{{ paramDealer.DlrSaleTaxPer }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            County Sales Tax:
+                        </td>
+                        <td>{{ paramDealer.DlrCntyTaxPer }}
+
+                        </td>
+                    </tr>
                 </table>
                 <br/>
                 <p><strong>
@@ -117,7 +133,7 @@
                     </p>
                     <br/>
                 <p>
-                    <button color="primary" type="button" (click)="return()" mat-raised-button>Edit</button>
+                    <button color="primary" type="button" (click)="return()" mat-raised-button>Edit</button>&nbsp;
                     <button color="primary" type="button" (click)="welcome()" mat-raised-button>Continue</button>
                 </p>
             </form>
