@@ -1,11 +1,11 @@
 <mat-card>
-  <mat-card-title>MAF FLEX Dealer Registration TESTING</mat-card-title><br>
+  <mat-card-title>MAF FLEX Dealer Registration</mat-card-title><br>
   <mat-card-content *ngIf="dealerForm">
     <form [formGroup]="dealerForm" (ngSubmit)="onSubmit()">
 
       <div class="row">
         <div class="col-sm-3 col-xs-3">
-          <h1>Your Info</h1>
+          <h1>Your Dealership Info</h1>
         </div>
         <div class="col-sm-9 col-xs-9">
           <div>
@@ -17,22 +17,23 @@
           </div>
 
           <div>
-              <mat-form-field appearance="outline" class="firstname outlinepadding">
-                <mat-label>First name</mat-label>
-                <input matInput formControlName="firstName" placeholder="First name" maxlength="15">
-                <mat-error *ngIf="firstName.invalid">First name is invalid</mat-error>
-              </mat-form-field>&nbsp;
-              <mat-form-field appearance="outline" class="lastname outlinepadding">
-                <mat-label>Last name</mat-label>
-                <input matInput formControlName="lastName" placeholder="Last Name" maxlength="15">
-                <mat-error *ngIf="lastName.invalid">Last name is invalid</mat-error>
-              </mat-form-field>
+            <mat-form-field appearance="outline" class="firstname outlinepadding">
+              <mat-label>First name</mat-label>
+              <input matInput formControlName="firstName" placeholder="First name" maxlength="15">
+              <mat-error *ngIf="firstName.invalid">First name is invalid</mat-error>
+            </mat-form-field>&nbsp;
+            <mat-form-field appearance="outline" class="lastname outlinepadding">
+              <mat-label>Last name</mat-label>
+              <input matInput formControlName="lastName" placeholder="Last Name" maxlength="15">
+              <mat-error *ngIf="lastName.invalid">Last name is invalid</mat-error>
+            </mat-form-field>
           </div>
 
           <div>
             <mat-form-field appearance="outline" class="dealer outlinepadding">
               <mat-label>Email address</mat-label>
-              <input matInput placeholder="Email address" formControlName="email" maxlength="40">
+              <input matInput placeholder="Email address" formControlName="email" maxlength="40"
+                pattern="^\S*[@]\S*[.]\S*$">
               <mat-error *ngIf="email.hasError('emailTaken')">
                 Email address is taken in FLEX
               </mat-error>
@@ -40,7 +41,7 @@
                 Email is
                 <strong>required</strong>
               </mat-error>
-              <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+              <mat-error *ngIf="email.hasError('pattern') && !email.hasError('required')">
                 Email address is invalid
               </mat-error>
             </mat-form-field>
@@ -67,7 +68,8 @@
               <input matInput formControlName="city" placeholder="City" maxlength="30">
               <mat-error *ngIf="city.invalid">Please enter a valid city</mat-error>
             </mat-form-field>&nbsp;
-            <mat-form-field class="state ml-13 outlinepadding" appearance="outline">
+            <mat-form-field class="state ml-13 outlinepaddingselect" appearance="outline">
+              <mat-label>State</mat-label>
               <mat-select formControlName="state">
                 <mat-option *ngFor="let s of states" [value]="s.value">
                   {{ s.viewValue }}
@@ -83,7 +85,8 @@
               <input matInput formControlName="zip" placeholder="Zip" maxlength="5">
               <mat-error *ngIf="zip.invalid">Zipcode is invalid</mat-error>
             </mat-form-field>&nbsp;
-            <mat-form-field class="county outlinepadding" appearance="outline">
+            <mat-form-field class="county outlinepaddingselect" appearance="outline">
+              <mat-label>County</mat-label>
               <mat-select formControlName="county" placeholder="County">
                 <mat-option *ngFor="let county of counties" [value]="county">
                   {{ county }}
@@ -98,12 +101,22 @@
               <mat-error *ngIf="phone.invalid">Phone number is invalid</mat-error>
             </mat-form-field>
           </div>
+          <div>
+            <mat-form-field class="DMSWidth outlinepaddingselect" appearance="outline">
+              <mat-label>Referred By</mat-label>
+              <mat-select formControlName="referredById" placeholder="Referred by">
+                <mat-option *ngFor="let d of ReferredByValues" [value]="d.value">
+                  {{ d.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-3 col-xs-3">
-          <h1>Your Dealership</h1>
+          <h1>Your Dealership Management Software</h1>
         </div>
 
         <div class="col-sm-9 col-xs-9">
@@ -116,8 +129,14 @@
 
           <div>
             <mat-form-field class="DMSWidth outlinepadding" appearance="outline">
-              <mat-select formControlName="DMSId" placeholder="Your Dealership Management System">
+              <mat-select formControlName="DMSId" placeholder="Your Dealership Management System" (selectionChange)="selected($event)">
+                <mat-select-trigger>
+                    {{selectedDMSText}}
+                </mat-select-trigger>
                 <mat-option *ngFor="let d of DMSValues" [value]="d.value">
+                    <!-- <mat-icon>home</mat-icon> -->
+                    <mat-icon svgIcon="{{d.icon}}"></mat-icon>
+                    <!-- <mat-icon [className]="'mat-icon material-icons alert--'+context" svgIcon="{{d.icon}}"></mat-icon> -->
                   {{ d.viewValue }}
                 </mat-option>
               </mat-select>
@@ -128,15 +147,6 @@
               <mat-label>Other Dealership Management System</mat-label>
               <input matInput formControlName="DMSOther" placeholder="Other Dealership Management System"
                 maxlength="40">
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="DMSWidth outlinepadding" appearance="outline">
-              <mat-select formControlName="referredById" placeholder="Referred by">
-                <mat-option *ngFor="let d of ReferredByValues" [value]="d.value">
-                  {{ d.viewValue }}
-                </mat-option>
-              </mat-select>
             </mat-form-field>
           </div>
         </div>
@@ -156,7 +166,7 @@
           </mat-form-field>&nbsp;
           <mat-form-field appearance="outline" class="taxpercent outlinepadding">
             <mat-label>County tax %</mat-label>
-            <input type="number" matInput formControlName="countyTax" placeholder="County Tax Percent" maxlength="5">
+            <input type="number" matInput formControlName="countyTax" placeholder="County Tax Percent">
             <mat-error *ngIf="countyTax.invalid">Please enter a valid county sales tax</mat-error>
           </mat-form-field>
         </div>
@@ -166,7 +176,7 @@
       <p>
         <button id="bnSubmit" color="accent" type="submit" color="primary" mat-raised-button>Submit</button>
       </p>
-      
+
     </form>
     <br />
     <span style="color:red">{{ errorMessage }}</span>
@@ -180,6 +190,6 @@
 
     <!-- <p>state errors: {{ state.errors | json }}</p>
       <p>state value: {{ state.viewValue }}</p> -->
-
+<button mat-button (click)="clicked()">click here to set select</button>
   </mat-card-content>
 </mat-card>

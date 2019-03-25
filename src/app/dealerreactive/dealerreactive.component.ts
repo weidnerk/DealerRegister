@@ -9,6 +9,9 @@ import { Contact } from '../_models/contact';
 import { CompanyProfile } from '../_models/companyprofile';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatSelectChange, MatOption } from '@angular/material';
 
 import { map } from 'rxjs/operators';
 import { DealerParamService } from '../_services/dealerparam.service'
@@ -24,13 +27,22 @@ const LASTNAME_REGEX = /^[a-zA-Z ']+$/;
 //const LASTNAME_REGEX = "[a-zA-Z][a-zA-Z ]+";  // can have a space
 const DEALER_REGEX = /^[0-9a-zA-Z. ]+$/;
 
-
 @Component({
   selector: 'app-dealerreactive',
   templateUrl: './dealerreactive.component.html',
   styleUrls: ['./dealerreactive.component.scss']
 })
 export class DealerReactiveComponent implements OnInit {
+
+  // was using Angular's [Validators.email] to validate dealer's email address
+  // but this allows atypical email addresses (although technically correct)
+  //  see for reference
+  // https://stackoverflow.com/questions/23671934/form-validation-email-validation-not-working-as-expected-in-angularjs
+  //
+  // so came up with pattern instead
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  // trick is to test for this error properly:
+  //  <mat-error *ngIf="email.hasError('pattern')>
 
   ReferredByValues = [
     { value: '1', viewValue: 'Field Agent' },
@@ -40,13 +52,21 @@ export class DealerReactiveComponent implements OnInit {
     { value: '5', viewValue: 'Other' }
   ];
 
+  // DMSValues = [
+  //   { value: '0', viewValue: 'Frazer', icon: 'wricon' },
+  //   { value: '1', viewValue: 'Wayne Reaves', icon: 'wricon' },
+  //   { value: '2', viewValue: 'Auto Star Solutions', icon: 'wricon' },
+  //   { value: '3', viewValue: 'Dealer Center', icon: 'wricon' },
+  //   { value: '4', viewValue: 'Finance Express', icon: 'wricon' },
+  //   { value: '5', viewValue: 'Other', icon: 'wricon' }
+  // ];
   DMSValues = [
-    { value: '6', viewValue: 'Frazer' },
-    { value: '7', viewValue: 'Wayne Reaves' },
-    { value: '2', viewValue: 'Auto Star Solutions' },
-    { value: '5535', viewValue: 'Dealer Center' },
-    { value: '5', viewValue: 'Finance Express' },
-    { value: '8', viewValue: 'Other' }
+    { value: '6', viewValue: 'Frazer', icon: 'wricon' },
+    { value: '7', viewValue: 'Wayne Reaves', icon: 'wricon' },
+    { value: '2', viewValue: 'Auto Star Solutions', icon: 'wricon' },
+    { value: '5535', viewValue: 'Dealer Center', icon: 'wricon' },
+    { value: '5', viewValue: 'Finance Express', icon: 'wricon' },
+    { value: '8', viewValue: 'Other', icon: 'wricon' }
   ];
 
   states = [
@@ -101,6 +121,7 @@ export class DealerReactiveComponent implements OnInit {
   qryStrContactId: string;
   qryStrSupplied: boolean = false;
   contactId: number;
+  selectedDMSText: string;
 
   dealerForm: FormGroup;
   constructor(private fb: FormBuilder,
@@ -108,8 +129,28 @@ export class DealerReactiveComponent implements OnInit {
     private router: Router,
     private dealerParams: DealerParamService,
     private signupService: SignupService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'wricon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/manuals.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'frazericon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/frazer.svg')
+    );
+
+    // this.matIconRegistry.addSvgIcon(
+    //   'wricon',
+    //   this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/manuals.svg')
+    // );
+    // this.matIconRegistry.addSvgIcon(
+    //   'frazericon',
+    //   this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/frazer.svg')
+    // );
+  }
 
   ngOnInit(): void {
 
@@ -194,8 +235,20 @@ export class DealerReactiveComponent implements OnInit {
           stateSalesTax: (this.dealer.DlrSaleTaxPer) ? Number(this.dealer.DlrSaleTaxPer) : null,
           countyTax: (this.dealer.DlrCntyTaxPer) ? Number(this.dealer.DlrCntyTaxPer) : null,
         });
+        
+        // need to set the text of the DMSId select control
+        var dmsid = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null) ? this.dealer.CompanyProfile.DMSId.toString() : null;
+        if (dmsid) {
+          this.selectedDMSText = this.DMSValues[this.DMSValueIndex(dmsid)].viewValue;
+        }
         //this.dealerForm.controls['DMSId'].setValue('3');
         //this.dealerForm.controls['county'].setValue(this.dealer.County);
+
+        // var x = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null) ? this.dealer.CompanyProfile.DMSId.toString() : null;
+        // if (x) {
+        //   const toSelect = this.DMSValues.find(c => c.value == x);
+        //   this.DMSId.get('DMSId').setValue(toSelect);
+        // }
       }
     }
   }
@@ -226,7 +279,7 @@ export class DealerReactiveComponent implements OnInit {
         updateOn: 'submit'
       }],
       email: [null, {
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.required, Validators.pattern(this.emailPattern)],
         asyncValidators: [this.validateEmailNotTaken.bind(this)],
         updateOn: 'submit'
       }],
@@ -264,11 +317,11 @@ export class DealerReactiveComponent implements OnInit {
         updateOn: 'submit'
       }],
       stateSalesTax: [null, {
-        validators: [Validators.max(10), Validators.min(0)],
+        validators: [Validators.max(15), Validators.min(0)],
         updateOn: 'submit'
       }],
       countyTax: [null, {
-        validators: [Validators.max(10), Validators.min(0)],
+        validators: [Validators.max(15), Validators.min(0)],
         updateOn: 'submit'
       }]
     })
@@ -432,8 +485,7 @@ export class DealerReactiveComponent implements OnInit {
 
     // Did user select a "Referred By" value?
     if (this.referredById.value != null) {
-      if (this.dealer.CompanyProfile == null) 
-      {
+      if (this.dealer.CompanyProfile == null) {
         let p = new CompanyProfile();
         p.CompanyID = this.dealer.CompanyID;
         p.ReferredBy = Number(this.referredById.value);
@@ -495,29 +547,84 @@ export class DealerReactiveComponent implements OnInit {
     );
   }
 
-    // Create our own 'form is valid' function so we can check when Submit button is clicked
-    formIsValid(): boolean {
+  // Create our own 'form is valid' function so we can check when Submit button is clicked
+  formIsValid(): boolean {
 
-      // apparently these calls are not needed
-      //this.firstName.updateValueAndValidity();
-      //this.lastName.updateValueAndValidity();
-  
-      if (this.dealername.invalid) return false;
-      if (this.firstName.invalid ) return false;
-      if (this.lastName.invalid) return false;
-      if (this.email.invalid) return false;
-      if (this.address.invalid) return false;
-      if (this.address2.invalid) return false;
-      if (this.city.invalid) return false;
-      if (this.state.invalid) return false;
-      if (this.zip.invalid) return false;
-      if (this.county.invalid) return false;
-      if (this.phone.invalid) return false;
-      if (this.submitFromDT.invalid) return false;
-      if (this.DMSId.invalid) return false;
-      if (this.stateSalesTax.invalid) return false;
-      if (this.countyTax.invalid) return false;
-      return true;
+    // apparently these calls are not needed
+    //this.firstName.updateValueAndValidity();
+    //this.lastName.updateValueAndValidity();
+
+    if (this.dealername.invalid) return false;
+    if (this.firstName.invalid) return false;
+    if (this.lastName.invalid) return false;
+    if (this.email.invalid) return false;
+    if (this.address.invalid) return false;
+    if (this.address2.invalid) return false;
+    if (this.city.invalid) return false;
+    if (this.state.invalid) return false;
+    if (this.zip.invalid) return false;
+    if (this.county.invalid) return false;
+    if (this.phone.invalid) return false;
+    if (this.submitFromDT.invalid) return false;
+    if (this.DMSId.invalid) return false;
+    if (this.stateSalesTax.invalid) return false;
+    if (this.countyTax.invalid) return false;
+    return true;
+  }
+
+  selected(event: MatSelectChange) {
+    const selectedData = {
+      text: (event.source.selected as MatOption).viewValue,
+      value: event.source.value
     }
-  
+
+    var i = this.DMSValueIndex(selectedData.value);
+    this.selectedDMSText = this.DMSValues[i].viewValue;
+    // this.foodForm.controls['foodName'].setValue(this.selectedText);
+  }
+
+  DMSValueIndex(dmsid: string) {
+    var ret: number;
+    switch (dmsid) {
+      case "6": {
+        ret = 0;
+        break;
+      }
+      case "7": {
+        ret = 1;
+        break;
+      }
+      case "2": {
+        ret = 2;
+        break;
+      }
+      case "5535": {
+        ret = 3;
+        break;
+      }
+      case "5": {
+        ret = 4;
+        break;
+      }
+      case "8": {
+        ret = 5;
+        break;
+      }
+    }
+    return ret;
+  }
+
+  clicked() {
+
+    // need both to work
+    this.dealerForm.patchValue({
+      DMSId: "7"
+    });
+    this.selectedDMSText = this.DMSValues[1].viewValue;
+
+    // const toSelect = this.DMSValues.find(c => c.value == '7');
+    // // this.DMSId.get('DMSId').setValue(toSelect);
+    // this.dealerForm.controls['DMSId'].setValue(toSelect);
+
+  }
 }

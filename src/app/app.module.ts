@@ -5,7 +5,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';   // i
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatCardModule, MatSelectModule, MatToolbarModule, MatCheckboxModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatCardModule, MatSelectModule, MatToolbarModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 //import { NoConflictStyleCompatibilityMode } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -37,7 +37,8 @@ import { WelcomeComponent } from './welcome/welcome.component'
     MatCardModule,
     MatSelectModule,
     MatToolbarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+     MatIconModule
     // ,
     // NoConflictStyleCompatibilityMode
   ],

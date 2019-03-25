@@ -32,24 +32,17 @@
 //     width: 120px;
 // }
 
-// .outlinepadding ::ng-deep .mat-form-field-appearance-outline {
-//     // width: 65px;
-//     height: 45px;
-//     line-height: 1.725;
-// }
-
-// .outlinepadding ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-// padding: 0px 10px 0px 10px;
-// }
 
 .outlinepadding ::ng-deep .mat-form-field-infix {
-padding: 3px 0 3px 0;
+    padding: 3px 0 3px 0; /* top,right,bottom,right */
 }
-    
-// .outlinepadding ::ng-deep .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
-// /* text-align: center; */
-// top: -25px;
-// }
+
+/* moves input up/down, affects padding - helps to manage height of control */
+.outlinepaddingselect ::ng-deep .mat-form-field-infix {
+    padding: 12px 0 7px 0; /* top,right,bottom,right */
+    // font-size: 13px;
+    // bottom: 10px;        /* moves text in textbox up and down, but arrow not aligned */
+}
 
 // :host ::ng-deep .rightPadding div.mat-input-wrapper.mat-form-field-wrapper{
 //     margin-right: 1em;
@@ -61,3 +54,29 @@ padding: 3px 0 3px 0;
 // .rightMargin {
 //      margin-left: 200px;
 // }
+
+/* style for material select 
+.outlinepaddingselect ::ng-deep .mat-form-field-appearance-outline {
+    // width: 65px;
+    height: 175px;
+    line-height: 2.725;
+}
+*/
+
+/* seems to do nothing */
+
+// .outlinepaddingselect ::ng-deep .mat-form-field-appearance-outline {
+//     padding: 20px 20px 20px 20px;
+// }
+
+// .outlinepaddingselect ::ng-deep .mat-form-field-flex {
+//      padding: 0px 0px 0px 0px;
+//      bottom: 15px;
+//  }
+
+// .outlinepaddingselect ::ng-deep .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+//     //text-align: center; 
+//     //bottom: 5px;
+//     padding: 0px 0 0px 0; /* top,right,bottom,right */
+// }
+

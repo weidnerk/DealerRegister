@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Page 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Zendesk" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Zendesk-Support---Hero-Option-1" transform="translate(-388.000000, -1098.000000)" stroke-width="2" stroke="#D54D3D">
+            <g id="Group-17" transform="translate(202.000000, 991.000000)">
+                <g id="Group-15">
+                    <g id="Group-8" transform="translate(27.000000, 108.000000)">
+                        <g id="Page-1" transform="translate(160.000000, 0.000000)">
+                            <path d="M126,63 C126,28.20636 97.79364,0 63,0 C28.20636,0 0,28.20636 0,63 C0,97.79364 28.20636,126 63,126 C97.79364,126 126,97.79364 126,63 Z" id="Stroke-1"></path>
+                            <path d="M45.00002,38.00002 L60.00007,38.00002 L60.00007,62.0001 L52.500045,57.500085 L45.00002,62.0001 L45.00002,38.00002 Z M87.00016,34.9959474 C87.00016,33.3413313 85.666263,32 83.997535,32 L42.002625,32 C40.344321,32 39,33.3373142 39,34.9959474 L39,89.0042526 C39,90.6588687 40.333897,92.0002 42.002625,92.0002 L83.997535,92.0002 C85.655839,92.0002 87.00016,90.6628858 87.00016,89.0042526 L87.00016,34.9959474 Z" id="Stroke-3"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
