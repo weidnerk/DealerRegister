@@ -61,12 +61,12 @@ export class DealerReactiveComponent implements OnInit {
   //   { value: '5', viewValue: 'Other', icon: 'wricon' }
   // ];
   DMSValues = [
-    { value: '6', viewValue: 'Frazer', icon: 'wricon' },
+    { value: '6', viewValue: 'Frazer', icon: 'frazericon' },
     { value: '7', viewValue: 'Wayne Reaves', icon: 'wricon' },
-    { value: '2', viewValue: 'Auto Star Solutions', icon: 'wricon' },
-    { value: '5535', viewValue: 'Dealer Center', icon: 'wricon' },
-    { value: '5', viewValue: 'Finance Express', icon: 'wricon' },
-    { value: '8', viewValue: 'Other', icon: 'wricon' }
+    { value: '2', viewValue: 'Auto Star Solutions', icon: 'dmsstubicon' },
+    { value: '5535', viewValue: 'Dealer Center', icon: 'dmsstubicon' },
+    { value: '5', viewValue: 'Finance Express', icon: 'dmsstubicon' },
+    { value: '8', viewValue: 'Other', icon: 'dmsstubicon' }
   ];
 
   states = [
@@ -135,11 +135,15 @@ export class DealerReactiveComponent implements OnInit {
   ) {
     this.matIconRegistry.addSvgIcon(
       'wricon',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/manuals.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/WR_LOGO.svg')
     );
     this.matIconRegistry.addSvgIcon(
       'frazericon',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/frazer.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/Frazer_Logo.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'dmsstubicon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/manuals.svg')
     );
 
     // this.matIconRegistry.addSvgIcon(
