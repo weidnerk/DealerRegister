@@ -40,7 +40,8 @@ export class DealerReactiveComponent implements OnInit {
   // https://stackoverflow.com/questions/23671934/form-validation-email-validation-not-working-as-expected-in-angularjs
   //
   // so came up with pattern instead
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+  
   // trick is to test for this error properly:
   //  <mat-error *ngIf="email.hasError('pattern')>
 
