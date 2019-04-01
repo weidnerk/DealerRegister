@@ -21,10 +21,10 @@ import { ValidateEmailNotTaken } from '../_validators/email.validator'
 import { ValidateCountyExists } from '../_validators/county.validator'
 import { MatSelectModule } from '@angular/material';
 
-//const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+// const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const FIRSTNAME_REGEX = /^[a-zA-Z]+$/;
 const LASTNAME_REGEX = /^[a-zA-Z ']+$/;
-//const LASTNAME_REGEX = "[a-zA-Z][a-zA-Z ]+";  // can have a space
+// const LASTNAME_REGEX = "[a-zA-Z][a-zA-Z ]+";  // can have a space
 const DEALER_REGEX = /^[0-9a-zA-Z. ]+$/;
 
 @Component({
@@ -40,8 +40,8 @@ export class DealerReactiveComponent implements OnInit {
   // https://stackoverflow.com/questions/23671934/form-validation-email-validation-not-working-as-expected-in-angularjs
   //
   // so came up with pattern instead
-  emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
-  
+  emailPattern = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+
   // trick is to test for this error properly:
   //  <mat-error *ngIf="email.hasError('pattern')>
 
@@ -115,7 +115,7 @@ export class DealerReactiveComponent implements OnInit {
   ];
   dealer = new CMSCompany();
   contact = new Contact();
-  //dealer: CMSCompany;     // shared, service variable
+  // dealer: CMSCompany;     // shared, service variable
   errorMessage: string;
   counties: string[];
   qryStrEmail: string;
@@ -172,7 +172,7 @@ export class DealerReactiveComponent implements OnInit {
           this.contactId = Number(queryParams.get('contactId'));
           this.dealerService.getCompanyFromContact(this.contactId).subscribe(
             dealer => {
-              //console.log('finish call to getCompanyFromContact');
+              // console.log('finish call to getCompanyFromContact');
               this.qryStrSupplied = true;
               this.dealerParams.changeQryStrVal(true);
               this.dealer = dealer;
@@ -213,12 +213,12 @@ export class DealerReactiveComponent implements OnInit {
 
         if (!this.qryStrSupplied) {
 
-        }
-        else
+        } else {
           this.dealerForm.controls['email'].disable();
+        }
 
         // why is this null?
-        //console.log('dms id: ' + this.dealer.CompanyProfile.DMSId);
+        // console.log('dms id: ' + this.dealer.CompanyProfile.DMSId);
 
         // if qrystr, click refresh, this.dealer has values?
         this.dealerForm.patchValue({
@@ -259,11 +259,11 @@ export class DealerReactiveComponent implements OnInit {
   }
 
   getFirstName(contact: string): string {
-    var stringArray = contact.split(/(\s+)/);
+    const stringArray = contact.split(/(\s+)/);
     return stringArray[0];
   }
   getLastName(contact: string): string {
-    var stringArray = contact.split(/(\s+)/);
+    const stringArray = contact.split(/(\s+)/);
     return stringArray[2];
   }
 
@@ -338,7 +338,7 @@ export class DealerReactiveComponent implements OnInit {
       this.signupService.getCounty(c.value)
         .subscribe(x => {
           this.counties = x;
-          if (this.counties.length == 1) {
+          if (this.counties.length === 1) {
             this.dealerForm.patchValue({
               county: this.counties[0]
             });
@@ -362,13 +362,13 @@ export class DealerReactiveComponent implements OnInit {
 
   // zip must be 5 digits long
   validateZip(c: AbstractControl): { [key: string]: boolean | null } {
-    //console.log('zip ' + c.value);
+    // console.log('zip ' + c.value);
     if (c.value === null) {
       return { error: true };
     }
-    if (c.value != undefined) {
+    if (c.value !== undefined) {
       this.dealerForm.controls['county'].setValue(null);
-      let strLength: number = (<string>c.value).length;
+      const strLength: number = (<string>c.value).length;
       if (strLength != 5) {
         this.counties = null;
         return { error: true };
@@ -377,8 +377,7 @@ export class DealerReactiveComponent implements OnInit {
       if (isNaN(c.value)) {
         this.counties = null;
         return { error: true };
-      }
-      else {
+      } else {
         return null;    // control is valid              
       }
     }
@@ -390,13 +389,15 @@ export class DealerReactiveComponent implements OnInit {
   // but can't get it to work, so ended up creating this custome validator
   validatePhone(c: AbstractControl): { [key: string]: boolean | null } {
 
-    if (c.value != undefined) {
-      let strLength: number = (<string>c.value).length;
-      if (strLength != 10)
+    if (c.value) {
+      const strLength: number = (<string>c.value).length;
+      if (strLength !== 10) {
         return { error: true };
+      }
 
-      if (isNaN(c.value))
+      if (isNaN(c.value)) {
         return { error: true };
+      }
 
       return null;
     }
@@ -455,8 +456,9 @@ export class DealerReactiveComponent implements OnInit {
   onSubmit() {
 
     console.log(this.dealerForm.valid);
-    if (!this.formIsValid())
+    if (!this.formIsValid()) {
       return;
+    }
 
     // --------------------------------------------------
     // Fill 'dealer' from form
@@ -480,8 +482,7 @@ export class DealerReactiveComponent implements OnInit {
         p.CompanyID = this.dealer.CompanyID;
         p.DMSId = Number(this.DMSId.value);
         this.dealer.CompanyProfile = p;
-      }
-      else {
+      } else {
         this.dealer.CompanyProfile.DMSId = Number(this.DMSId.value);
       }
       this.dealer.DMSName = this.getDMSNameFromID(this.dealer.CompanyProfile.DMSId);
@@ -501,15 +502,17 @@ export class DealerReactiveComponent implements OnInit {
       }
     }
 
-    if (this.stateSalesTax.value)
+    if (this.stateSalesTax.value) {
       this.dealer.DlrSaleTaxPer = Number(this.stateSalesTax.value);
-    else
+    } else {
       this.dealer.DlrSaleTaxPer = null;
+    }
 
-    if (this.countyTax.value)
+    if (this.countyTax.value) {
       this.dealer.DlrCntyTaxPer = Number(this.countyTax.value);
-    else
+    } else {
       this.dealer.DlrCntyTaxPer = null;
+    }
 
     // fill contact
     if (this.dealer.CompanyID != null) {
@@ -519,8 +522,7 @@ export class DealerReactiveComponent implements OnInit {
         Email: this.email.value,
         ContactName: this.firstName.value.trim() + ' ' + this.lastName.value.trim()
       }];
-    }
-    else {
+    } else {
       this.contact = new Contact();
       this.contact.ContactName = this.firstName.value.trim() + ' ' + this.lastName.value.trim();
       this.contact.Email = this.email.value;
@@ -538,8 +540,7 @@ export class DealerReactiveComponent implements OnInit {
           }
           this.dealerParams.changeDealer(this.dealer);
           this.router.navigate(['/dealerreview']);
-        }
-        else {
+        } else {
           this.errorMessage = "There was a problem creating your account - please call Mid-Atlantic.  Thank you.";
         }
       },
@@ -548,7 +549,7 @@ export class DealerReactiveComponent implements OnInit {
         this.errorMessage = error
       }
       ,      // in case of failure show this message
-      () => console.log("Job Done Post !")                  //run this code in all cases
+      () => console.log('Job Done Post !')                  // run this code in all cases
     );
   }
 
@@ -556,24 +557,24 @@ export class DealerReactiveComponent implements OnInit {
   formIsValid(): boolean {
 
     // apparently these calls are not needed
-    //this.firstName.updateValueAndValidity();
-    //this.lastName.updateValueAndValidity();
+    // this.firstName.updateValueAndValidity();
+    // this.lastName.updateValueAndValidity();
 
-    if (this.dealername.invalid) return false;
-    if (this.firstName.invalid) return false;
-    if (this.lastName.invalid) return false;
-    if (this.email.invalid) return false;
-    if (this.address.invalid) return false;
-    if (this.address2.invalid) return false;
-    if (this.city.invalid) return false;
-    if (this.state.invalid) return false;
-    if (this.zip.invalid) return false;
-    if (this.county.invalid) return false;
-    if (this.phone.invalid) return false;
-    if (this.submitFromDT.invalid) return false;
-    if (this.DMSId.invalid) return false;
-    if (this.stateSalesTax.invalid) return false;
-    if (this.countyTax.invalid) return false;
+    if (this.dealername.invalid) { return false; }
+    if (this.firstName.invalid) { return false; }
+    if (this.lastName.invalid) { return false; }
+    if (this.email.invalid) { return false; }
+    if (this.address.invalid) { return false; }
+    if (this.address2.invalid) { return false; }
+    if (this.city.invalid) { return false; }
+    if (this.state.invalid) { return false; }
+    if (this.zip.invalid) { return false; }
+    if (this.county.invalid) { return false; }
+    if (this.phone.invalid) { return false; }
+    if (this.submitFromDT.invalid) { return false; }
+    if (this.DMSId.invalid) { return false; }
+    if (this.stateSalesTax.invalid) { return false; }
+    if (this.countyTax.invalid) { return false; }
     return true;
   }
 
@@ -591,27 +592,27 @@ export class DealerReactiveComponent implements OnInit {
   DMSValueIndex(dmsid: string) {
     var ret: number;
     switch (dmsid) {
-      case "6": {
+      case '6': {
         ret = 0;
         break;
       }
-      case "7": {
+      case '7': {
         ret = 1;
         break;
       }
-      case "2": {
+      case '2': {
         ret = 2;
         break;
       }
-      case "5535": {
+      case '5535': {
         ret = 3;
         break;
       }
-      case "5": {
+      case '5': {
         ret = 4;
         break;
       }
-      case "8": {
+      case '8': {
         ret = 5;
         break;
       }
