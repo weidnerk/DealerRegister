@@ -14,11 +14,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatSelectChange, MatOption } from '@angular/material';
 
 import { map } from 'rxjs/operators';
-import { DealerParamService } from '../_services/dealerparam.service'
-import { DealerService } from '../_services/dealer.service'
+import { DealerParamService } from '../_services/dealerparam.service';
+import { DealerService } from '../_services/dealer.service';
 import { SignupService } from '../_services/signup.service';
-import { ValidateEmailNotTaken } from '../_validators/email.validator'
-import { ValidateCountyExists } from '../_validators/county.validator'
+import { ValidateEmailNotTaken } from '../_validators/email.validator';
+import { ValidateCountyExists } from '../_validators/county.validator';
 import { MatSelectModule } from '@angular/material';
 
 // const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -120,7 +120,7 @@ export class DealerReactiveComponent implements OnInit {
   counties: string[];
   qryStrEmail: string;
   qryStrContactId: string;
-  qryStrSupplied: boolean = false;
+  qryStrSupplied = false;
   contactId: number;
   selectedDMSText: string;
 
@@ -167,7 +167,7 @@ export class DealerReactiveComponent implements OnInit {
         // if we got a contactId on the query string
         if (queryParams.get('contactId')) {
           // console.log(queryParams.get('contactId'));
-          // if (this.dealer) console.log('dealer defined') 
+          // if (this.dealer) console.log('dealer defined')
           // else console.log('dealer undefined');
           this.contactId = Number(queryParams.get('contactId'));
           this.dealerService.getCompanyFromContact(this.contactId).subscribe(
@@ -180,8 +180,7 @@ export class DealerReactiveComponent implements OnInit {
               this.setupForm();
             },
             error => this.errorMessage = <any>error);
-        }
-        else {
+        } else {
           // Wait for the param service to return a dealer (if there is one)
           // and then build the form
           this.dealerParams.currentDealer.subscribe(
@@ -199,8 +198,8 @@ export class DealerReactiveComponent implements OnInit {
                       this.errorMessage = error.errMsg;
                     });
 
-              })
-            })
+              });
+            });
         }
       });
   }
@@ -223,7 +222,7 @@ export class DealerReactiveComponent implements OnInit {
         // if qrystr, click refresh, this.dealer has values?
         this.dealerForm.patchValue({
           dealername: this.dealer.CompanyName,
-          firstName: this.getFirstName(this.dealer.Contacts[0].ContactName),// have to split contact name into first and last name
+          firstName: this.getFirstName(this.dealer.Contacts[0].ContactName), // have to split contact name into first and last name
           lastName: this.getLastName(this.dealer.Contacts[0].ContactName),
           email: this.dealer.Contacts[0].Email,
           address: this.dealer.AddrLn1,
@@ -233,23 +232,30 @@ export class DealerReactiveComponent implements OnInit {
           phone: this.replaceAll(this.dealer.Phone, '-', ''),
           zip: this.dealer.Zip,
           submitFromDT: this.dealer.SubmitFromDT,
-          DMSId: (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null) ? this.dealer.CompanyProfile.DMSId.toString() : null,
+          DMSId: (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null)
+            ? this.dealer.CompanyProfile.DMSId.toString()
+            : null,
           DMSOther: this.dealer.DMSOther,
-          referredById: (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.ReferredBy != null) ? this.dealer.CompanyProfile.ReferredBy.toString() : null,
+          referredById: (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.ReferredBy != null)
+            ? this.dealer.CompanyProfile.ReferredBy.toString()
+            : null,
           county: this.dealer.County,
           stateSalesTax: (this.dealer.DlrSaleTaxPer) ? Number(this.dealer.DlrSaleTaxPer) : null,
           countyTax: (this.dealer.DlrCntyTaxPer) ? Number(this.dealer.DlrCntyTaxPer) : null,
         });
-        
+
         // need to set the text of the DMSId select control
-        var dmsid = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null) ? this.dealer.CompanyProfile.DMSId.toString() : null;
+        const dmsid = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null)
+          ? this.dealer.CompanyProfile.DMSId.toString()
+          : null;
         if (dmsid) {
           this.selectedDMSText = this.DMSValues[this.DMSValueIndex(dmsid)].viewValue;
         }
-        //this.dealerForm.controls['DMSId'].setValue('3');
-        //this.dealerForm.controls['county'].setValue(this.dealer.County);
+        // this.dealerForm.controls['DMSId'].setValue('3');
+        // this.dealerForm.controls['county'].setValue(this.dealer.County);
 
-        // var x = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null) ? this.dealer.CompanyProfile.DMSId.toString() : null;
+        // var x = (this.dealer.CompanyProfile != null && this.dealer.CompanyProfile.DMSId != null)
+        //  ? this.dealer.CompanyProfile.DMSId.toString() : null;
         // if (x) {
         //   const toSelect = this.DMSValues.find(c => c.value == x);
         //   this.DMSId.get('DMSId').setValue(toSelect);
@@ -329,12 +335,12 @@ export class DealerReactiveComponent implements OnInit {
         validators: [Validators.max(15), Validators.min(0)],
         updateOn: 'submit'
       }]
-    })
+    });
   }
 
   validateCounty(c: AbstractControl): Observable<ValidationErrors | null> {
 
-    if (c.value != undefined) {
+    if (c.value !== undefined) {
       this.signupService.getCounty(c.value)
         .subscribe(x => {
           this.counties = x;
@@ -350,7 +356,7 @@ export class DealerReactiveComponent implements OnInit {
           });
     }
     return of(null);
-  };
+  }
 
   validateEmailNotTaken(control: AbstractControl) {
 
@@ -369,7 +375,7 @@ export class DealerReactiveComponent implements OnInit {
     if (c.value !== undefined) {
       this.dealerForm.controls['county'].setValue(null);
       const strLength: number = (<string>c.value).length;
-      if (strLength != 5) {
+      if (strLength !== 5) {
         this.counties = null;
         return { error: true };
       }
@@ -378,7 +384,7 @@ export class DealerReactiveComponent implements OnInit {
         this.counties = null;
         return { error: true };
       } else {
-        return null;    // control is valid              
+        return null;    // control is valid
       }
     }
   }
@@ -476,9 +482,8 @@ export class DealerReactiveComponent implements OnInit {
 
     // Did user select a DMS?
     if (this.DMSId.value != null) {
-      if (this.dealer.CompanyProfile == null)   // the CMS dealer may not have a stored company profile yet
-      {
-        let p = new CompanyProfile();
+      if (this.dealer.CompanyProfile == null) {   // the CMS dealer may not have a stored company profile yet
+        const p = new CompanyProfile();
         p.CompanyID = this.dealer.CompanyID;
         p.DMSId = Number(this.DMSId.value);
         this.dealer.CompanyProfile = p;
@@ -492,12 +497,11 @@ export class DealerReactiveComponent implements OnInit {
     // Did user select a "Referred By" value?
     if (this.referredById.value != null) {
       if (this.dealer.CompanyProfile == null) {
-        let p = new CompanyProfile();
+        const p = new CompanyProfile();
         p.CompanyID = this.dealer.CompanyID;
         p.ReferredBy = Number(this.referredById.value);
         this.dealer.CompanyProfile = p;
-      }
-      else {
+      } else {
         this.dealer.CompanyProfile.ReferredBy = Number(this.referredById.value);
       }
     }
@@ -534,19 +538,19 @@ export class DealerReactiveComponent implements OnInit {
       data => {
         this.dealer = data;
         if (this.dealer.CompanyID > 0) {
-          this.dealer.Phone = this.replaceAll(this.dealer.Phone, "-", "");
+          this.dealer.Phone = this.replaceAll(this.dealer.Phone, '-', '');
           if (this.dealer.CompanyProfile != null) { // dealer from CMS does not have DMSName property
             this.dealer.DMSName = this.getDMSNameFromID(this.dealer.CompanyProfile.DMSId);
           }
           this.dealerParams.changeDealer(this.dealer);
           this.router.navigate(['/dealerreview']);
         } else {
-          this.errorMessage = "There was a problem creating your account - please call Mid-Atlantic.  Thank you.";
+          this.errorMessage = 'There was a problem creating your account - please call Mid-Atlantic.  Thank you.';
         }
       },
       error => {
         console.log('postCompany: ' + error);
-        this.errorMessage = error
+        this.errorMessage = error;
       }
       ,      // in case of failure show this message
       () => console.log('Job Done Post !')                  // run this code in all cases
@@ -582,15 +586,15 @@ export class DealerReactiveComponent implements OnInit {
     const selectedData = {
       text: (event.source.selected as MatOption).viewValue,
       value: event.source.value
-    }
+    };
 
-    var i = this.DMSValueIndex(selectedData.value);
+    const i = this.DMSValueIndex(selectedData.value);
     this.selectedDMSText = this.DMSValues[i].viewValue;
     // this.foodForm.controls['foodName'].setValue(this.selectedText);
   }
 
   DMSValueIndex(dmsid: string) {
-    var ret: number;
+    let ret: number;
     switch (dmsid) {
       case '6': {
         ret = 0;
@@ -624,7 +628,7 @@ export class DealerReactiveComponent implements OnInit {
 
     // need both to work
     this.dealerForm.patchValue({
-      DMSId: "7"
+      DMSId: '7'
     });
     this.selectedDMSText = this.DMSValues[1].viewValue;
 
