@@ -1,4 +1,4 @@
-export class Contact {
+export interface Contact {
     ContactID: number;
     ContactName: string;
     CompanyID: number;

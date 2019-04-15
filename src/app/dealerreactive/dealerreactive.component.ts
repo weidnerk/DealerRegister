@@ -114,7 +114,7 @@ export class DealerReactiveComponent implements OnInit {
     { value: 'WY', viewValue: 'WY' }
   ];
   dealer = new CMSCompany();
-  contact = new Contact();
+  contact = {} as Contact;
   // dealer: CMSCompany;     // shared, service variable
   errorMessage: string;
   counties: string[];
@@ -527,7 +527,7 @@ export class DealerReactiveComponent implements OnInit {
         ContactName: this.firstName.value.trim() + ' ' + this.lastName.value.trim()
       }];
     } else {
-      this.contact = new Contact();
+      this.contact = {} as Contact;
       this.contact.ContactName = this.firstName.value.trim() + ' ' + this.lastName.value.trim();
       this.contact.Email = this.email.value;
       this.dealer.Contacts = [];

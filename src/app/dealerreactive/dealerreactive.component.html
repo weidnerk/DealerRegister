@@ -5,14 +5,14 @@
 
       <div class="row">
         <div class="col-sm-3 col-xs-3">
-          <h1>Your Dealership Info</h1>
+          <h1>Dealership Info</h1>
         </div>
         <div class="col-sm-9 col-xs-9">
           <div>
             <mat-form-field appearance="outline" class="dealer outlinepadding">
               <mat-label>Dealer name</mat-label>
               <input matInput formControlName="dealername" placeholder="Dealer name" maxlength="40">
-              <mat-error *ngIf="dealername.invalid">Dealer name is invalid</mat-error>
+              <mat-error *ngIf="dealername.invalid"><mat-icon>error</mat-icon>&nbsp;Dealer name is invalid</mat-error>
             </mat-form-field>
           </div>
 
@@ -20,12 +20,12 @@
             <mat-form-field appearance="outline" class="firstname outlinepadding">
               <mat-label>First name</mat-label>
               <input matInput formControlName="firstName" placeholder="First name" maxlength="15">
-              <mat-error *ngIf="firstName.invalid">First name is invalid</mat-error>
+              <mat-error *ngIf="firstName.invalid"><mat-icon>error</mat-icon>&nbsp;First name is invalid</mat-error>
             </mat-form-field>&nbsp;
             <mat-form-field appearance="outline" class="lastname outlinepadding">
               <mat-label>Last name</mat-label>
               <input matInput formControlName="lastName" placeholder="Last Name" maxlength="15">
-              <mat-error *ngIf="lastName.invalid">Last name is invalid</mat-error>
+              <mat-error *ngIf="lastName.invalid"><mat-icon>error</mat-icon>&nbsp;Last name is invalid</mat-error>
             </mat-form-field>
           </div>
 
@@ -34,14 +34,15 @@
               <mat-label>Email address</mat-label>
               <input matInput placeholder="Email address" formControlName="email" maxlength="40"
                 pattern="^\S*[@]\S*[.]\S*$">
-              <mat-error *ngIf="email.hasError('emailTaken')">
+              <mat-error *ngIf="email.hasError('emailTaken')"><mat-icon>error</mat-icon>&nbsp;
                 Email address is taken in FLEX
               </mat-error>
-              <mat-error *ngIf="email.hasError('required')">
+              <mat-error *ngIf="email.hasError('required')"><mat-icon>error</mat-icon>&nbsp;
                 Email is
                 <strong>required</strong>
               </mat-error>
               <mat-error *ngIf="email.hasError('pattern') && !email.hasError('required')">
+                  <mat-icon>error</mat-icon>&nbsp;
                 Email address is invalid
               </mat-error>
             </mat-form-field>
@@ -51,7 +52,7 @@
             <mat-form-field appearance="outline" class="dealer outlinepadding">
               <mat-label>Address</mat-label>
               <input matInput formControlName="address" placeholder="Address Line 1" maxlength="40">
-              <mat-error *ngIf="address.invalid">Please enter a valid address</mat-error>
+              <mat-error *ngIf="address.invalid"><mat-icon>error</mat-icon>&nbsp;Please enter a valid address</mat-error>
             </mat-form-field>
           </div>
 
@@ -66,7 +67,7 @@
             <mat-form-field class="city mr-13" appearance="outline" class="city outlinepadding">
               <mat-label>City</mat-label>
               <input matInput formControlName="city" placeholder="City" maxlength="30">
-              <mat-error *ngIf="city.invalid">Please enter a valid city</mat-error>
+              <mat-error *ngIf="city.invalid"><mat-icon>error</mat-icon>&nbsp;Please enter a valid city</mat-error>
             </mat-form-field>&nbsp;
             <mat-form-field class="state ml-13 outlinepaddingselect" appearance="outline">
               <mat-label>State</mat-label>
@@ -75,7 +76,7 @@
                   {{ s.viewValue }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="state.invalid">State is required</mat-error>
+              <mat-error *ngIf="state.invalid"><mat-icon>error</mat-icon>&nbsp;State is required</mat-error>
             </mat-form-field>
           </div>
 
@@ -83,7 +84,7 @@
             <mat-form-field class="zipCode" appearance="outline" class="zipcode outlinepadding">
               <mat-label>Zip code</mat-label>
               <input matInput formControlName="zip" placeholder="Zip" maxlength="5">
-              <mat-error *ngIf="zip.invalid">Zipcode is invalid</mat-error>
+              <mat-error *ngIf="zip.invalid"><mat-icon>error</mat-icon>&nbsp;Zipcode is invalid</mat-error>
             </mat-form-field>&nbsp;
             <mat-form-field class="county outlinepaddingselect" appearance="outline">
               <mat-label>County</mat-label>
@@ -98,7 +99,7 @@
             <mat-form-field appearance="outline" class="businessphone outlinepadding">
               <mat-label>Business phone</mat-label>
               <input matInput formControlName="phone" placeholder="Business Phone" maxlength="10" type="text">
-              <mat-error *ngIf="phone.invalid">Phone number is invalid</mat-error>
+              <mat-error *ngIf="phone.invalid"><mat-icon>error</mat-icon>&nbsp;Phone number is invalid</mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -116,7 +117,7 @@
 
       <div class="row">
         <div class="col-sm-3 col-xs-3">
-          <h1>Your Dealership Management Software</h1>
+          <h1>Dealership Management Software</h1>
         </div>
 
         <div class="col-sm-9 col-xs-9">
@@ -129,7 +130,7 @@
 
           <div>
             <mat-form-field class="DMSWidth outlinepadding" appearance="outline">
-              <mat-select formControlName="DMSId" placeholder="Your Dealership Management System" (selectionChange)="selected($event)">
+              <mat-select formControlName="DMSId" placeholder="Dealership Management System" (selectionChange)="selected($event)">
                 <mat-select-trigger>
                     {{selectedDMSText}}
                 </mat-select-trigger>
@@ -155,7 +156,7 @@
       <div class="row">
 
         <div class="col-sm-3 col-xs-3">
-          <h1>Your Taxes</h1>
+          <h1>Tax Information</h1>
         </div>
 
         <div class="col-sm-9 col-xs-9">

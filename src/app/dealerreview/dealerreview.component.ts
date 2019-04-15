@@ -5,40 +5,40 @@ import { CMSCompany } from '../_models/company';
 import { DealerParamService } from '../_services/dealerparam.service';
 
 @Component({
-    selector: 'app-dealer-review',
-    templateUrl: './dealerreview.component.html',
-    styleUrls: ['./dealerreview.component.css']
-  })
-  export class DealerReviewComponent implements OnInit {
+  selector: 'app-dealer-review',
+  templateUrl: './dealerreview.component.html',
+  styleUrls: ['./dealerreview.component.css']
+})
+export class DealerReviewComponent implements OnInit {
 
-    paramDealer: CMSCompany;
-    firstName: string;
-    lastName: string;
-    referredByName: string;
+  paramDealer: CMSCompany;
+  firstName: string;
+  lastName: string;
+  referredByName: string;
 
-    constructor(private route: Router, private dealerParams: DealerParamService) {
-    }
+  constructor(private route: Router, private dealerParams: DealerParamService) {
+  }
 
-    ngOnInit() {
+  ngOnInit() {
 
-      // subscribe to the currentDealer observable
-      this.dealerParams.currentDealer.subscribe(
-        paramDealer => {
-          this.paramDealer = paramDealer;
-          this.firstName = this.getFirstName(this.paramDealer.Contacts[0].ContactName);
-          this.lastName = this.getLastName(this.paramDealer.Contacts[0].ContactName);
-          if (this.paramDealer.CompanyProfile) {
-            this.referredByName = this.getReferredFromID(this.paramDealer.CompanyProfile.ReferredBy);
-          }
+    // subscribe to the currentDealer observable
+    this.dealerParams.currentDealer.subscribe(
+      paramDealer => {
+        this.paramDealer = paramDealer;
+        this.firstName = this.getFirstName(this.paramDealer.Contacts[0].ContactName);
+        this.lastName = this.getLastName(this.paramDealer.Contacts[0].ContactName);
+        if (this.paramDealer.CompanyProfile) {
+          this.referredByName = this.getReferredFromID(this.paramDealer.CompanyProfile.ReferredBy);
         }
-      );
-    }
+      }
+    );
+  }
 
-    return() {
-        this.route.navigate(['/dealerreactive']);
-    }
-    welcome() {
-      this.route.navigate(['/welcome']);
+  return() {
+    this.route.navigate(['/dealerreactive']);
+  }
+  welcome() {
+    this.route.navigate(['/welcome']);
   }
 
   getFirstName(contact: string): string {
