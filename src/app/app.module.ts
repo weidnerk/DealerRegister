@@ -4,7 +4,13 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatCardModule, MatSelectModule, MatToolbarModule, MatCheckboxModule, MatIconModule } from '@angular/material';
+import { MatInputModule,
+  MatButtonModule,
+  MatCardModule,
+  MatSelectModule,
+  MatToolbarModule,
+  MatCheckboxModule,
+  MatIconModule } from '@angular/material';
 // import { NoConflictStyleCompatibilityMode } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
