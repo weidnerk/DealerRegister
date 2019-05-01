@@ -53,14 +53,6 @@ export class DealerReactiveComponent implements OnInit {
     { value: '5', viewValue: 'Other' }
   ];
 
-  // DMSValues = [
-  //   { value: '0', viewValue: 'Frazer', icon: 'wricon' },
-  //   { value: '1', viewValue: 'Wayne Reaves', icon: 'wricon' },
-  //   { value: '2', viewValue: 'Auto Star Solutions', icon: 'wricon' },
-  //   { value: '3', viewValue: 'Dealer Center', icon: 'wricon' },
-  //   { value: '4', viewValue: 'Finance Express', icon: 'wricon' },
-  //   { value: '5', viewValue: 'Other', icon: 'wricon' }
-  // ];
   DMSValues = [
     { value: '6', viewValue: 'Frazer', icon: 'frazericon' },
     { value: '7', viewValue: 'Wayne Reaves', icon: 'wricon' },
