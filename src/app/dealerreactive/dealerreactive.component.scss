@@ -1,40 +1,6 @@
-// .DMSWidth {
-//     width: 45%;
-// }
-
-// .zipcode {
-//     width: 100px !important;
-// }
-// .city {
-//     width: 200px !important;
-//     display: inline-block;
-// }
-// .county {
-//     width: 200px !important;
-// }
-// .state {
-//     width: 75px;
-//     display: inline-block;
-// }
-// .dealer {
-//     width: 400px;
-// }
-// .firstname {
-//     width: 150px;
-// }
-// .lastname {
-//     width: 150px;
-// }
-// .businessphone {
-//     width: 150px;
-// }
-// .taxpercent {
-//     width: 120px;
-// }
 .email {
     width: 350px !important;
 }
-
 
 .outlinepadding ::ng-deep .mat-form-field-infix {
     padding: 3px 0 3px 0; /* top,right,bottom,right */
@@ -47,39 +13,7 @@
     // bottom: 10px;        /* moves text in textbox up and down, but arrow not aligned */
 }
 
-// :host ::ng-deep .rightPadding div.mat-input-wrapper.mat-form-field-wrapper{
-//     margin-right: 1em;
-//   }
-
 .leftColumn {
     font-size: 21px;
 }
-// .rightMargin {
-//      margin-left: 200px;
-// }
-
-/* style for material select 
-.outlinepaddingselect ::ng-deep .mat-form-field-appearance-outline {
-    // width: 65px;
-    height: 175px;
-    line-height: 2.725;
-}
-*/
-
-/* seems to do nothing */
-
-// .outlinepaddingselect ::ng-deep .mat-form-field-appearance-outline {
-//     padding: 20px 20px 20px 20px;
-// }
-
-// .outlinepaddingselect ::ng-deep .mat-form-field-flex {
-//      padding: 0px 0px 0px 0px;
-//      bottom: 15px;
-//  }
-
-// .outlinepaddingselect ::ng-deep .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
-//     //text-align: center; 
-//     //bottom: 5px;
-//     padding: 0px 0 0px 0; /* top,right,bottom,right */
-// }
 
