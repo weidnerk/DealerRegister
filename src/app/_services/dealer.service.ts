@@ -1,7 +1,6 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
+import {throwError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import {catchError} from 'rxjs/internal/operators';
@@ -91,14 +90,20 @@ export class DealerService {
         );
     }
 
-    private handleError(error: Response) {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        const body = error.json();
-        console.log('dealer service API error: ' + body.Message);
-
-        // throw an application level error
-        return observableThrowError(body.Message || 'dealer.service: Server error - cannot connect to API');
+    private handleError(error: any) {
+        if (error.error instanceof ProgressEvent) { // connection problem
+            return throwError(error.message || 'Server error');
+        } else {
+            // server returned exception
+            if (error.error.innerException) {
+                return throwError(error.status + ' ' + error.error.innerException.exceptionMessage);
+            }
+            // Errors collection populated in CustomerAppLeaseResponse
+            if (error.error.errors) {
+                return throwError(error.status + ' ' + error.error.errors[0].message);
+            }
+            return throwError(error.status + ' an error occurred');
+        }
     }
 
 }
